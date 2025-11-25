@@ -66,7 +66,7 @@
 ---
 
 ## 📂 Project Structure
-
+```bash
 src/
 ├── components/ # Reusable UI elements
 ├── context/ # Legacy optional context systems
@@ -79,9 +79,7 @@ src/
 │ └── wishlistSlice.js
 ├── App.jsx
 └── main.jsx
-
-yaml
-Copy code
+```
 
 ---
 
@@ -99,14 +97,14 @@ git clone https://github.com/karankumar-ghub/Flipzone.git
 cd Flipzone
 Install dependencies:
 ```
-
-```bash
 Copy code
+```bash
 npm install
 Start the development server:
 ```
+
+Copy code:
 ```bash
-Copy code
 npm run dev
 ```
 Open in browser:
@@ -156,4 +154,4 @@ Recommendation Engine (ML-powered)
 This project is licensed under the MIT License.
 
 💙 Built with passion by
-Karan Kumar (TheAIKaran)
+    Karan Kumar
