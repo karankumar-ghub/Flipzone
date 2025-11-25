@@ -97,7 +97,9 @@ git clone https://github.com/karankumar-ghub/Flipzone.git
 cd Flipzone
 ```
 Install dependencies:
-Copy code: ```bash npm install```
+ ```bash 
+ npm install
+```
 Start the development server:
 ```bash
 npm run dev
