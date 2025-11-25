@@ -150,4 +150,4 @@ Recommendation Engine (ML-powered)
 📝 License
 This project is licensed under the MIT License.
 
-#💙 Built with passion by Karan Kumar
+# 💙 Built with passion by Karan Kumar
