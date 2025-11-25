@@ -1,78 +1,99 @@
 import React from 'react';
-import { Heart, ShoppingCart, Star } from 'lucide-react';
+import { Heart, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleWishlist } from '../store/wishlistSlice';
 
-const ProductCard = ({ product, onAddToCart }) => (
-  <div className="group relative bg-gray-900/40 border border-white/5 rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] flex flex-col h-full backdrop-blur-sm">
-    {/* Image Area - Clickable via Link */}
-    <Link to={`/product/${product.id}`} className="block relative h-72 overflow-hidden bg-gray-800/50 cursor-pointer">
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10 opacity-60"></div>
-      <img 
-        src={product.image} 
-        alt={product.name} 
-        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-      />
+const ProductCard = ({ product, onAddToCart }) => {
+  const dispatch = useDispatch();
+  
+  const wishlistItems = useSelector((state) => state.wishlist.items);
+  const isInWishlist = wishlistItems.some(item => item.id === product.id);
+
+  const originalPrice = Math.round(product.price * 1.4);
+  const discount = Math.round(((originalPrice - product.price) / originalPrice) * 100);
+
+  const handleWishlistClick = (e) => {
+    e.preventDefault(); 
+    e.stopPropagation();
+    dispatch(toggleWishlist(product));
+  };
+
+  // Helper for broken images
+  const handleImageError = (e) => {
+    e.target.src = "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=800&q=80"; // Fallback Image
+  };
+
+  // Use the first image from the array, fallback to the old 'image' property if needed
+  const displayImage = product.images && product.images.length > 0 ? product.images[0] : product.image;
+
+  return (
+    <div className="group relative bg-(--bg-secondary) border border-(--card-border) rounded-[4px] hover:shadow-lg transition-all duration-200 flex flex-col h-full overflow-hidden">
       
-      {/* Quick Actions (Heart) */}
+      {/* Favorite Button (Absolute) */}
       <button 
-        onClick={(e) => {
-          e.preventDefault(); // Prevent navigation when clicking heart
-          e.stopPropagation();
-        }}
-        className="absolute top-4 right-4 z-20 p-2 bg-black/40 backdrop-blur-md rounded-full text-gray-400 hover:text-fuchsia-500 hover:bg-white/10 transition-all border border-white/5"
+        onClick={handleWishlistClick}
+        className={`absolute top-3 right-3 z-10 transition-colors duration-200 ${
+          isInWishlist ? 'text-red-500' : 'text-gray-300 hover:text-red-500'
+        }`}
       >
-        <Heart size={18} />
+        <Heart 
+          size={18} 
+          fill="currentColor" 
+          className={`transition-opacity duration-200 ${
+            isInWishlist ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          }`} 
+        />
       </button>
-      
-      <div className="absolute bottom-4 left-4 z-20 flex gap-1">
-        {[1,2,3].map(i => (
-          <div key={i} className={`w-2 h-2 rounded-full ${i === 1 ? 'bg-cyan-500' : 'bg-gray-600'}`}></div>
-        ))}
-      </div>
-    </Link>
 
-    {/* Content Area */}
-    <div className="p-6 flex-1 flex flex-col relative z-20">
-      <div className="mb-2 flex justify-between items-start">
-        <div className="bg-gray-800/50 px-2 py-1 rounded text-[10px] font-bold text-cyan-400 uppercase tracking-wider border border-white/5">
-          {product.category}
-        </div>
-        <div className="flex items-center gap-1 text-yellow-400 text-xs font-bold">
-          <Star size={12} fill="currentColor" />
-          <span>{product.rating}</span>
-          <span className="text-gray-600 font-normal">({product.reviews})</span>
-        </div>
-      </div>
-
-      {/* Title - Clickable via Link */}
-      <Link to={`/product/${product.id}`}>
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors leading-tight cursor-pointer">
-          {product.name}
-        </h3>
+      {/* Image Area */}
+      <Link to={`/product/${product.id}`} className="relative h-56 p-6 flex items-center justify-center bg-white">
+        <img 
+          src={displayImage} 
+          alt={product.name} 
+          onError={handleImageError}
+          className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+        />
       </Link>
-      
-      <p className="text-sm text-gray-500 mb-6 line-clamp-2">
-        {product.description}
-      </p>
-      
-      <div className="mt-auto flex items-center justify-between">
-        <div className="flex flex-col">
-          <span className="text-gray-600 text-xs font-mono mb-0.5">PRICE</span>
-          <span className="text-2xl font-bold text-white">${product.price}</span>
+
+      {/* Content Area */}
+      <div className="p-4 flex flex-col flex-grow">
+        {/* Title */}
+        <Link to={`/product/${product.id}`} className="text-sm text-(--text-primary) hover:text-(--accent-cyan) font-medium leading-snug mb-2 line-clamp-2 transition-colors">
+          {product.name}
+        </Link>
+
+        {/* Rating & Reviews */}
+        <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-1 bg-green-600 text-white px-1.5 py-0.5 rounded-[2px] text-[10px] font-bold">
+            <span>{product.rating}</span>
+            <Star size={8} fill="currentColor" />
+          </div>
+          <span className="text-xs text-(--text-secondary) font-medium">({product.reviews.toLocaleString()})</span>
         </div>
-        <button 
-          onClick={(e) => {
-            e.preventDefault(); // Important: Stop link navigation when clicking "Add"
-            onAddToCart(product);
-          }}
-          className="px-5 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-300 flex items-center gap-2 active:scale-95 group/btn"
-        >
-          Add
-          <ShoppingCart size={16} className="group-hover/btn:rotate-12 transition-transform" />
-        </button>
+
+        {/* Price Block */}
+        <div className="mt-auto">
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="text-lg font-bold text-(--text-primary)">₹{Math.floor(product.price).toLocaleString('en-IN')}</span>
+            <span className="text-sm text-(--text-secondary) line-through">₹{originalPrice.toLocaleString('en-IN')}</span>
+            <span className="text-xs text-green-600 font-bold">{discount}% off</span>
+          </div>
+          
+          {/* Badges */}
+          <div className="text-[10px] font-medium text-(--text-primary) mt-1">
+            Free delivery
+          </div>
+          
+          {product.isBestSeller && (
+             <div className="mt-2 text-[10px] font-bold text-(--accent-fuchsia) border border-(--accent-fuchsia) px-1.5 py-0.5 inline-block rounded-[2px] uppercase tracking-wider">
+               Bestseller
+             </div>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ProductCard;

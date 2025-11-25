@@ -1,56 +1,85 @@
 @import "tailwindcss";
 
-/* --- THEME ENGINE --- */
+/* --- ENTERPRISE E-COMMERCE THEME --- */
 @layer base {
   :root {
-    /* Default Dark Mode Theme */
-    --bg-primary: #050505;
-    --bg-secondary: #0a0a0a;
-    --text-primary: #ffffff;
-    --text-secondary: #9ca3af;
-    --accent-cyan: #06b6d4;
-    --accent-fuchsia: #c026d3;
-    --card-border: rgba(255, 255, 255, 0.1);
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --nav-bg: rgba(10, 10, 10, 0.8);
+    /* Default (Light Mode is now the standard) */
+    --bg-primary: #f1f3f6;       /* Flipkart-style light gray background */
+    --bg-secondary: #ffffff;     /* Pure white for cards/nav */
+    --text-primary: #212121;     /* Deep charcoal for main text */
+    --text-secondary: #878787;   /* Medium gray for subtitles */
+    
+    /* Brand Colors */
+    --accent-cyan: #2874f0;      /* "Prime Blue" (Primary Brand Color) */
+    --accent-fuchsia: #fb641b;   /* "Action Orange" (Secondary/CTA Color) */
+    --accent-green: #388e3c;     /* Success/Discount Green */
+    
+    /* UI Elements */
+    --card-border: #e0e0e0;      /* Subtle border */
+    --card-bg: #ffffff;          /* Solid white cards */
+    --nav-bg: #2874f0;           /* Blue Header */
+    --nav-text: #ffffff;         /* White text on header */
+    
+    /* Gradients (Subtle for enterprise look) */
+    --gradient-start: #2874f0;
+    --gradient-middle: #5691f5;
+    --gradient-end: #7aaafc;
   }
 
-  /* Light Mode Overrides (Applied when .light class is on html element) */
-  :root.light {
-    --bg-primary: #f3f4f6;
-    --bg-secondary: #ffffff;
-    --text-primary: #111827;
-    --text-secondary: #4b5563;
-    --accent-cyan: #0891b2;
-    --accent-fuchsia: #a21caf;
-    --card-border: rgba(0, 0, 0, 0.1);
-    --card-bg: rgba(255, 255, 255, 0.5);
-    --nav-bg: rgba(255, 255, 255, 0.8);
+  /* Dark Mode (Optional) */
+  :root.dark {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #242526;
+    --text-primary: #e4e6eb;
+    --text-secondary: #b0b3b8;
+    --accent-cyan: #4a90e2;
+    --accent-fuchsia: #ff7e5f;
+    --card-border: #3a3b3c;
+    --card-bg: #242526;
+    --nav-bg: #242526;
+    --nav-text: #e4e6eb;
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    /* Smooth transition for theme switching */
-    transition: background-color 0.5s ease, color 0.5s ease;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
-/* --- CUSTOM ANIMATIONS & UTILITIES --- */
+/* --- ANIMATIONS & UTILITIES --- */
 @theme {
-  --animate-bounce-in: bounce-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  --animate-slide-in-right: slide-in-right 0.3s ease-out forwards;
-  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-  @keyframes bounce-in {
-    0% { transform: translateY(100%); opacity: 0; }
-    60% { transform: translateY(-10%); opacity: 1; }
-    100% { transform: translateY(0); }
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.7s ease-out forwards;
+  --animate-fade-in-right: fade-in-right 0.5s ease-out forwards;
+  --animate-bounce-in: bounce-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  --animate-gradient-x: gradient-x 3s ease infinite;
+  
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
-  @keyframes slide-in-right {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(0); }
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in-right {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes bounce-in {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes gradient-x {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
 
@@ -60,4 +89,20 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Custom Scrollbar for lists */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
