@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/* --- THEME ENGINE --- */
+@layer base {
+  :root {
+    /* Default Dark Mode Theme */
+    --bg-primary: #050505;
+    --bg-secondary: #0a0a0a;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+    --accent-cyan: #06b6d4;
+    --accent-fuchsia: #c026d3;
+    --card-border: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --nav-bg: rgba(10, 10, 10, 0.8);
+  }
+
+  /* Light Mode Overrides (Applied when .light class is on html element) */
+  :root.light {
+    --bg-primary: #f3f4f6;
+    --bg-secondary: #ffffff;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --accent-cyan: #0891b2;
+    --accent-fuchsia: #a21caf;
+    --card-border: rgba(0, 0, 0, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.5);
+    --nav-bg: rgba(255, 255, 255, 0.8);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    /* Smooth transition for theme switching */
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+}
+
+/* --- CUSTOM ANIMATIONS & UTILITIES --- */
+@theme {
+  --animate-bounce-in: bounce-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out forwards;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes bounce-in {
+    0% { transform: translateY(100%); opacity: 0; }
+    60% { transform: translateY(-10%); opacity: 1; }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes slide-in-right {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(0); }
+  }
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
