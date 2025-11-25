@@ -7,12 +7,11 @@ FlipZone 🛒
 📸 Screenshots
   
   <!-- Tip: Replace these paths with actual screenshots of your app -->
+  [Home Preview](public/Homepage.jpg)
+
+  [Product detail preview](\public\productdetails.jpg)
   
-  (public\Homepage.jpg)
-  
-  (\public\productdetails.jpg)
-  
-  (.\public\chekout.png)
+  [Checkout preview](public/chekout.png)
   
   
   
@@ -99,7 +98,7 @@ FlipZone 🛒
   Installation
   
   Clone the repository
-  
+  ``bash
   git clone [https://github.com/karankumar-ghub/Flipzone](https://github.com/karankumar-ghub/Flipzone)
   
   cd flipzone
@@ -129,9 +128,7 @@ FlipZone 🛒
   Mock Data & Persistence
   To simulate a real backend, I created a robust mock data generator and utilized localStorage within Redux reducers. This creates a persistent experience (saved cart, order history) without needing a database for this frontend demo.
   
-  🤝 Contributing
-  
-  Contributions, https://www.google.com/search?q=issues, and feature requests are welcome! Feel free to check the issues page.
+
   
   📝 License
   
