@@ -8,11 +8,11 @@ FlipZone is a high-fidelity, fully responsive e-commerce web application designe
 
 <!-- Tip: Replace these paths with actual screenshots of your app -->
 
-Home Page
+.\public\Homepage.jpg
 
-Product Details
+.\public\productdetails.jpg
 
-Cart & Checkout
+.\public\chekout.png
 
 
 
@@ -101,6 +101,7 @@ Installation
 Clone the repository
 
 git clone [https://github.com/yourusername/flipzone.git](https://github.com/yourusername/flipzone.git)
+
 cd flipzone
 
 
@@ -115,7 +116,7 @@ npm run dev
 
 
 Open in Browser
-Visit http://localhost:5173 to view the app.
+Visit https://flipzonekk.vercel.app/ to view the app.
 
 🧠 Architectural Decisions
 
